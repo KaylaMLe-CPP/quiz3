@@ -7,6 +7,7 @@ int main(int argc, char *argv[])
 {
     srand(time(NULL));
     int choice = 0;
+    const int ABSOLUTE_MAX = 100;
     int max = 10;
 
     while (choice != 3)
@@ -48,8 +49,11 @@ int main(int argc, char *argv[])
         }
         else if (choice == 2)
         {
-            printf("\nEnter new max number: ");
-            scanf("%d", &max);
+            do
+            {
+                printf("\nEnter new max number between 0 and %d: ", ABSOLUTE_MAX);
+                scanf("%d", &max);
+            } while (max < 0 || max > ABSOLUTE_MAX);
         }
         while ((getchar()) != '\n')
             ;
