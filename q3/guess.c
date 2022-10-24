@@ -2,13 +2,25 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
 int main(int argc, char *argv[])
 {
     srand(time(NULL));
     int choice = 0;
-    const int ABSOLUTE_MAX = 100;
+    const int LIMIT = 100;
     int max = 10;
+
+    FILE *saveChoice = fopen("choice.txt", "r");
+    char *prevMax;
+    fscanf(saveChoice, "%s", prevMax);
+
+    if (strlen(prevMax) > 0)
+    {
+        max = atoi(prevMax);
+    }
+
+    fclose(saveChoice);
 
     while (choice != 3)
     {
@@ -51,10 +63,17 @@ int main(int argc, char *argv[])
         {
             do
             {
-                printf("\nEnter new max number between 0 and %d: ", ABSOLUTE_MAX);
+                printf("\nEnter new max number between 0 and %d: ", LIMIT);
                 scanf("%d", &max);
-            } while (max < 0 || max > ABSOLUTE_MAX);
+            } while (max < 0 || max > LIMIT);
+
+            char maxToSave[3];
+            sprintf(maxToSave, "%d", max);
+            fopen("choice.txt", "w+");
+            fprintf(saveChoice, maxToSave);
+            fclose(saveChoice);
         }
+        // clears stdin buffer
         while ((getchar()) != '\n')
             ;
     }
